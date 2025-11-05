@@ -2,7 +2,7 @@
     <div class="container">
         <div class="sec-head mb-40">
             <div  >
-                <h3 class="fw-600 fz-30 text-u d-rotate wow  mb-30">SI Research Areas</h3>
+                <h3 class="fw-600 fz-30 text-u d-rotate wow  mb-30">SI Research Lab</h3>
                 <div class="">
                     <div class="d-flex align-items-center gap-2">
                         <div class=" vi-more">

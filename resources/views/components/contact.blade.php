@@ -52,7 +52,6 @@
                     </div>
                     <form id="contact-form" class="form2" method="post" action="{{ route('contact.store') }}">
                         @csrf
-                        <div class="messages"></div>
 
                         <div class="controls row">
                             <div class="col-lg-6">
@@ -77,9 +76,13 @@
                                 <div class="form-group">
                                     <textarea id="form_message" name="message" placeholder="Message" rows="4" required="required"></textarea>
                                 </div>
+                                <div id="contact-message" class="contact-message" style="display: none;"></div>
                                 <div class="mt-30">
-                                    <button type="submit" class="butn butn-full butn-bord radius-30">
+                                    <button type="submit" class="butn butn-full butn-bord radius-30" id="contact-submit-btn">
                                         <span class="text">Let's Talk</span>
+                                        <span class="loader-spinner" style="display: none; margin-left: 10px;">
+                                            <i class="fas fa-spinner fa-spin"></i> Sending...
+                                        </span>
                                     </button>
                                 </div>
                             </div>
@@ -108,6 +111,53 @@
         -webkit-text-fill-color: #fff !important; /* Changes text color */
         color: #fff !important;
         background-color: #000000 !important;
+    }
+}
+
+/* Loader spinner styles */
+#contact-submit-btn .loader-spinner {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#contact-submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Contact message styles */
+#contact-message {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    line-height: 1.5;
+    animation: slideDown 0.3s ease-out;
+}
+
+#contact-message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+#contact-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
