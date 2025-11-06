@@ -792,9 +792,58 @@ $(window).on("load", function () {
 
     $("#contact-form").validator();
 
+    // Function to show message above button
+    function showMessage(message, type) {
+        var messageElement = document.getElementById("contact-message");
+        if (!messageElement) return;
+
+        // Clear previous classes
+        messageElement.classList.remove("success", "error");
+
+        // Add type class
+        if (type) {
+            messageElement.classList.add(type);
+        }
+
+        // Set message text
+        messageElement.textContent = message;
+
+        // Show message
+        messageElement.style.display = "block";
+
+        // Auto-hide after 5 seconds
+        setTimeout(function () {
+            messageElement.style.display = "none";
+        }, 5000);
+    }
+
+    // Function to show/hide loader
+    function toggleLoader(show) {
+        var submitBtn = document.getElementById("contact-submit-btn");
+        if (!submitBtn) return;
+
+        var textSpan = submitBtn.querySelector(".text");
+        var loaderSpan = submitBtn.querySelector(".loader-spinner");
+
+        if (show) {
+            if (textSpan) textSpan.style.display = "none";
+            if (loaderSpan) loaderSpan.style.display = "inline-block";
+            submitBtn.disabled = true;
+        } else {
+            if (textSpan) textSpan.style.display = "inline";
+            if (loaderSpan) loaderSpan.style.display = "none";
+            submitBtn.disabled = false;
+        }
+    }
+
     $("#contact-form").on("submit", function (e) {
         if (!e.isDefaultPrevented()) {
+            e.preventDefault();
             var url = "/contact";
+            var form = $(this);
+
+            // Show loader
+            toggleLoader(true);
 
             $.ajaxSetup({
                 headers: {
@@ -804,27 +853,34 @@ $(window).on("load", function () {
                 },
             });
 
+            // Hide any previous messages
+            var messageElement = document.getElementById("contact-message");
+            if (messageElement) {
+                messageElement.style.display = "none";
+            }
+
             $.ajax({
                 type: "POST",
                 url: url,
-                data: $(this).serialize(),
+                data: form.serialize(),
                 success: function (data) {
-                    var messageAlert = "alert-success";
-                    var messageText = data.message;
+                    // Hide loader
+                    toggleLoader(false);
 
-                    var alertBox =
-                        '<div class="alert ' +
-                        messageAlert +
-                        ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' +
-                        messageText +
-                        "</div>";
-                    if (messageAlert && messageText) {
-                        $("#contact-form").find(".messages").html(alertBox);
-                        $("#contact-form")[0].reset();
-                    }
+                    // Reset form
+                    form[0].reset();
+
+                    // Show success message
+                    showMessage(
+                        data.message ||
+                            "Thank you for your message. We will get back to you soon!",
+                        "success"
+                    );
                 },
                 error: function (xhr) {
-                    var messageAlert = "alert-danger";
+                    // Hide loader
+                    toggleLoader(false);
+
                     var messageText =
                         "Sorry, there was an error sending your message. Please try again.";
 
@@ -832,13 +888,8 @@ $(window).on("load", function () {
                         messageText = xhr.responseJSON.message;
                     }
 
-                    var alertBox =
-                        '<div class="alert ' +
-                        messageAlert +
-                        ' alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' +
-                        messageText +
-                        "</div>";
-                    $("#contact-form").find(".messages").html(alertBox);
+                    // Show error message
+                    showMessage(messageText, "error");
                 },
             });
             return false;

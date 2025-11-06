@@ -6,7 +6,7 @@
                 <div class="">
                     <div class="d-flex align-items-center gap-2">
                         <div class=" vi-more">
-                    <a href="{{ env('LAB_URL') }}/research" class="butn butn-sm butn-bord radius-30">
+                    <a href="{{ env('LAB_URL') }}/publications" class="butn butn-sm butn-bord radius-30">
                         <span>View All SI Research</span>
                     </a>
                     <i class="icon fas fa-arrow-right"></i>

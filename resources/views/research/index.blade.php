@@ -11,11 +11,11 @@
             <div class="d-flex align-items-center">
                 <div>
                     <h6 class="title-bord mb-30">Research</h6>
-                    <h3 class="fw-600 fz-30 text-u d-rotate wow">Research Areas</h3>
+                    <h3 class="fw-600 fz-30 text-u d-rotate wow">SI Research Lab</h3>
                 </div>
                  <div class="ml-auto vi-more">
-                    <a href="{{ env('LAB_URL') }}/research" class="butn butn-sm butn-bord radius-30">
-                        <span>Go to Lab</span>
+                    <a href="{{ env('LAB_URL') }}/publications" class="butn butn-sm butn-bord radius-30">
+                        <span>Go to SI Lab</span>
                     </a>
                     <i class="icon fas fa-arrow-right"></i>
                 </div>
