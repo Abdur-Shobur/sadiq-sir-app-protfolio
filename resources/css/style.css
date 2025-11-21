@@ -930,7 +930,7 @@ figure {
 -----------------------------------------------------------------*/
 
 .hover-this .hover-anim {
-    pointer-events: none;
+    /* pointer-events: none; */
     -webkit-transition: -webkit-transform 0.2s linear;
     transition: -webkit-transform 0.2s linear;
     -o-transition: transform 0.2s linear;
